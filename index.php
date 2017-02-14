@@ -681,7 +681,7 @@ class index
             case 'timestamp':
                 return strtotime($var[$name]);
             case 'url':
-                return preg_match("/^http[s]?:\/\/([a-z0-9_-]+.)?[a-z0-9_\-]+.[a-z]{2,4}\//i", $var[$name]) ? $var[$name] : $default;
+                return preg_match("/^http[s]?:\/\/([a-z0-9_-]+.)*[a-z0-9_\-]+.[a-z]{2,4}\//i", $var[$name]) ? $var[$name] : $default;
         }
 
         return;
