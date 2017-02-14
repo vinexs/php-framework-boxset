@@ -1,0 +1,103 @@
+/* Extra Small for mobile size ( >= 420px ) */
+@media (max-width:420px){
+
+
+
+}
+
+/* Handle Bootstrap grid system [sm] ( >= 768px ) */
+@media (min-width:768px){
+
+	/* =============  Styled Nav Header ============= */
+	.navbar-@{nav-name}{
+		.navbar-brand{
+			margin-top: -15px;
+			img{
+				height: 50px;
+			}
+		}
+		.navbar-nav{
+			.dropdown-menu{
+				border-color:@theme-color;
+				>li{
+					&.dropdown {
+						> a{
+							i{
+								display: block;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.top-bar{
+		padding-top: 10px;
+		.search-box{
+			display: inline-block;
+			margin-left: 10px;
+			vertical-align: middle;
+			width: 140px;
+			.input-group{
+				&:first-child{
+					border-radius: 1px 0 0 1px !important;
+				}
+				&:last-child{
+					border-radius: 0 1px 1px 0 !important;
+				}
+			}
+			.btn-default{
+				.transition(background-color, 0.5s);
+				&:hover{
+					color: #333;
+					background-color: #e6e6e6;
+					border-color: #adadad;
+				}
+			}
+		}
+	}	
+	/* =============  Enhanced Nav Dropdown menu ============= */
+	.navbar{
+		.dropdown-menu{
+			.dropdown-menu{
+				display: none;
+				border-left: 1px solid @theme-color;
+				>li{
+					padding-left: 0px;
+				}
+			}
+			&:hover{
+				>.dropdown-menu {
+					display: block;
+				}
+			}
+			>.dropdown:hover{
+				>.dropdown-menu{
+					display: block;
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+}
+
+/* Handle Bootstrap grid system [md] ( >= 992px ) */
+@media (min-width:992px){
+
+
+}
+
+/* Handle Bootstrap grid system [lg] ( >= 1200px ) */
+@media (min-width:1200px){
+
+
+
+}
+
+
+

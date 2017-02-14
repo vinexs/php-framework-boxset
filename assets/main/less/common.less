@@ -1,0 +1,151 @@
+@import "functions.less";
+@import "bootstrap+.less";
+
+@nav-name: vinexs;
+
+@nav-background: #fff;
+@nav-border: #e7e7e7;
+
+@theme-color: #72c02c;
+
+
+/* =============  Styled Nav Header ============= */
+.navbar-@{nav-name}{
+	background-color: @nav-background;
+	border-bottom: 2px solid @nav-border;
+	.navbar-brand{
+		padding: 4px 15px;
+		img{
+			height: 42px;
+		}
+	}
+	.navbar-toggle{
+		padding: 8px 10px 6px 10px;
+		background-color: @theme-color;
+		&:hover{
+			background-color: #5fb611
+		}
+		i{
+			color: #fff;
+			font-size: 20px;
+		}
+	}
+	.navbar-nav{
+		>li{
+			>a{
+				font-size: 13px;
+				font-weight: 600;
+				color: #474747;
+				text-transform: uppercase;
+			}
+			&.active, &:hover, &:focus, &.open{
+				> a{
+					color: @theme-color;
+					background-color: transparent;
+				}
+			}
+		}
+		.dropdown-menu{
+			padding: 0;
+			top: 99%;
+			border: none;
+			border-top: 2px solid #EAEAEA;
+			.drop-shadow( 2px, 2px, 15px, rgba(0,0,0,0.175) );
+			>li{
+				>a{
+					padding: 6px 20px;
+					font-size: 13px;
+					font-weight: 400;
+					color: #687074;
+					border-bottom: solid 1px #eee;
+				}
+				&.dropdown {
+					> a{
+						position: relative;
+						i{
+							display: none;
+							position: absolute;
+							right: 11px;
+							top: 11px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+.top-bar{
+	text-align: right;
+	padding-top: 5px;
+	margin-bottom: 5px;
+	.lang-opt{
+		display: inline-block;
+		vertical-align: middle;
+		.btn-link{
+			color: #777;
+			img{
+				margin-right: 5px;
+			}
+		}
+	}
+	.search-box{
+		display: none;
+	}
+}
+/* =============  Enhanced Nav Dropdown menu ============= */
+.navbar{
+	.dropdown-menu{
+		.dropdown-menu{
+			display: block;
+			top: -2px;
+			left: 100%;
+			min-width: 190px;
+			border: none;
+			.border-radius( 0px );
+			>li{
+				padding-left: 5px;
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ======================================= */
+
+@import "responsive.less";
