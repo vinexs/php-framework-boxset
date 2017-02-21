@@ -121,9 +121,6 @@ class index
         if ($m == null) {
             die('Unable to read manifest or manifest format invalid.');
         }
-        if (!empty($m['minPhpVersion']) and (float) PHP_VERSION < $m['minPhpVersion']) {
-            die('Manifest: Server php version lower than expect.');
-        }
         if (empty($m['application']['activity'])) {
             die('Manifest: Application do not contain activity launcher.');
         }
