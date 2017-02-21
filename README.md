@@ -2,7 +2,7 @@
 It is a light weight web application framework. It is developed based on MVC framework.
 
 ## How to setup
-#### 1. Modify manifest.json
+### 1. Modify manifest.json
 | Param | Description | Example |
 | --- | --- | --- |
 | url.domain | Hosting domain name. | www.example.com |
@@ -33,3 +33,28 @@ It is a light weight web application framework. It is developed based on MVC fra
 | main.storage | OPTIONAL variable to set writable path | .. |
 | main.languageSource | Set language source from database or ini file | "dbname" or "ini" | 
 | main.language | Supported languages in array | en, zt, zs, js ... |
+
+#### Example of database object
+```json
+"test_db": {
+    "host": "localhost",
+    "user": "sqluser",
+    "password": "sql-password",
+    "db_name": "sql-db-name"
+}
+```
+"test_db" is a user define name, which will be used in "main.languageSource" or loadModel()
+
+| Param | Description | Example |
+| --- | --- | --- |
+| test_db.host | MySQL server host | 127.0.0.1 |
+| test_db.user | MySQL access user | user |
+| test_db.password | MySQL user password | ******** |
+| test_db.db_name | MySQL database name | testing_database |
+
+
+
+
+
+
+
