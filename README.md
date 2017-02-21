@@ -96,4 +96,8 @@ main
 * File in Folder "settings" will load automatically. Can be retrive with **$this->setting['foo']**.
 * Folder "views" will store view files. Those file can be call by **load_view($view, $vars)** .
 
-
+___
+### Functions
+## index.php
+```
+```
