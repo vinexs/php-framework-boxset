@@ -97,7 +97,7 @@ main
 * Folder "views" will store view files. Those file can be call by **load_view($view, $vars)** .
 
 ___
-### Functions
-## index.php
+## Functions
+### index.php
 ```
 ```
