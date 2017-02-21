@@ -74,10 +74,10 @@ main
       \ element_sample.php
       | frame_layout.php
 ```
-* Folder "controllers" store all the controller. Those files should extend form index.php .Can be load by load_controller($controller_name)
+* Folder "controllers" store all the controller. Those files should extend form **index.php** .Can be load by **load_controller($controller_name)**
 * Folder "languages" store languages ini files. It can be empty if using database languages.
-* Folder "models" store database model files. Those files should extend from /plugin/BaseModel.class
-* File in Folder "settings" will load automatically. Can be retrive with $this->setting['foo'].
-* Folder "views" will store view files. Those file can be call by load_view($view, $vars) .
+* Folder "models" store database model files. Those files should extend from **/plugin/BaseModel.class**
+* File in Folder "settings" will load automatically. Can be retrive with **$this->setting['foo']**.
+* Folder "views" will store view files. Those file can be call by **load_view($view, $vars)** .
 
 
