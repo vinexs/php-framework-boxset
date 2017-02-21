@@ -25,7 +25,7 @@ It is a light weight web application framework. It is developed based on MVC fra
     ]
 }
 ```
-"main" is a user define name.
+"main" is a user define name. It's pointing to framework root directory folder "main"
 
 | Param | Description | Example |
 | --- | --- | --- |
@@ -52,9 +52,32 @@ It is a light weight web application framework. It is developed based on MVC fra
 | test_db.password | MySQL user password | ******** |
 | test_db.db_name | MySQL database name | testing_database |
 
+### 2. Test your website
+If using above example, open your browser and access http://www.example.com/ or http://www.example.com/project-name/ .
 
-
-
-
+___
+## Activity File structure
+```
+main
+|-- controllers
+|     \ MainApp.class.php
+|-- languages
+|     \ en.ini
+|     | zs.ini
+|     | zt.ini
+|-- models
+|     \ LanguageModel.class.php
+|     | SessionModel.class.php
+|-- settings
+|     \ setting.php
+|-- views
+      \ element_sample.php
+      | frame_layout.php
+```
+* Folder "controllers" store all the controller. Those files should extend form index.php .Can be load by load_controller($controller_name)
+* Folder "languages" store languages ini files. It can be empty if using database languages.
+* Folder "models" store database model files. Those files should extend from /plugin/BaseModel.class
+* File in Folder "settings" will load automatically. Can be retrive with $this->setting['foo'].
+* Folder "views" will store view files. Those file can be call by load_view($view, $vars) .
 
 
