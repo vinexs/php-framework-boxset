@@ -56,7 +56,23 @@ It is a light weight web application framework. It is developed based on MVC fra
 If using above example, open your browser and access http://www.example.com/ or http://www.example.com/project-name/ .
 
 ___
-## Activity File structure
+## File structure
+### Framework
+```
+| -- assets
+|     \ main
+|     | ...
+| -- main
+|     \ (activity)
+| -- plugins
+|     \ BaseModel.class.php
+|     | Mcrypt.class.php
+| .htaccess
+| index.php
+| manifest.json
+```
+
+### Activity 
 ```
 main
 |-- controllers
