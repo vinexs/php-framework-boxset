@@ -31,7 +31,7 @@ It is a light weight web application framework. It is developed based on MVC fra
 | --- | --- | --- |
 | main.launch | Launch Class name with out extension | MainApp |
 | main.storage | OPTIONAL variable to set writable path | .. |
-| main.languageSource | Set language source from database or ini file | "dbname" or "ini" | 
+| main.languageSource | Set language source from database or ini file | "dbname" or "ini" |
 | main.language | Supported languages in array | en, zt, zs, js ... |
 
 #### Example of database object
@@ -72,7 +72,7 @@ ___
 | manifest.json
 ```
 
-### Activity 
+### Activity
 ```
 main
 |-- controllers
@@ -99,5 +99,20 @@ main
 ___
 ## Functions
 ### index.php
-```
-```
+load_controller($controller_name)
+load_model($model_name, $db_name)
+load_setting($current_only = true)
+load_view($view, $vars = array())
+load_plugin($plugin_name)
+load_file($file_path)
+
+redirect($url_path)
+get($name, $type = null, $default = null)
+post($name, $type = null, $default = null)
+
+show_error($error, $line_no = null)
+show_xml($status, $data = '')
+show_json($status, $data = null)
+
+lang($language_code)
+get_lang_var($json)
