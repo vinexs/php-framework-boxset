@@ -1,6 +1,13 @@
 # Vinexs Web Framework
 It is a light weight web application framework. It is developed based on MVC framework.
 
+## Requirement
+- Web server with URL Rewrite Module
+- php > 5.0
+
+## Security Warning
+Please make sure your *URL Rewrite Module* work properly or client can read manifest.json content with just typing the path.
+
 ## How to setup
 ### 1. Modify manifest.json
 | Param | Description | Example |
