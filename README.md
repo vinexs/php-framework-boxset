@@ -120,77 +120,141 @@ Load controller file and return as object.
 object load_model(string $model_name, string $db_name)
 ```
 Load model file and return as object.
-$model_name
-    Load model name inside models directory with out .class.php extension.
-$db_name
-    Which database name the model will connect.
-Return value
-    Model object or boolean false.
-    
+
+| Param | Description |
+| --- | --- |
+| $model_name | Load model name inside models directory with out .class.php extension. |
+| $db_name | Which database name the model will connect. |
+| Return value | Model object or boolean false. |
+   
 ```php
 array load_setting([$current_only = true])
 ```
 Load all file in target activity's [settings] folder and store $SETTING variable to class variable for future use.
-$current_only
-    Return only current activity settings.
-Return value
-    Setting variables
-    
+
+| Param | Description |
+| --- | --- |
+| $current_only | Return only current activity settings. |
+| Return value | Setting variables |
+
 ```php
-bool load_view(string $view, [array $vars = array()])
+bool load_view(string $view [,array $vars = array()])
 ```
 Load view file to output.
 
-$view 
-    View file name inside views directory with out .php extension.
-$vars
-    Variable to pass through view.
-Return value
-    Boolean to repersent load view success or fail.
+| Param | Description |
+| --- | --- |
+| $view | View file name inside views directory with out .php extension. |
+| $vars | Variable to pass through view. |
+| Return value | Boolean to repersent load view success or fail. |    
 
 ```php
 bool load_plugin(string $plugin_name)
 ```
 Load plugin class.php file to process.
-$plugin_name
-    Plugin name in plugin directory without .class.php extension.
-Return value
-    Boolean to repersent load class success or fail.
+
+| Param | Description |
+| --- | --- |
+| $plugin_name | Plugin name in plugin directory without .class.php extension. |
+| Return value | Boolean to repersent load class success or fail. |
 
 ```php
 void load_file(string $file_path)
 ```
 Output file in specific location, do not echo any content before load file.
-$file_path
-    Output file absolute path.
 
+| Param | Description |
+| --- | --- |
+| $file_path | Output file absolute path. |
 
 #### Page Handling
 ```php
-redirect($url_path)
+void redirect(string $url_path)
 ```
+Quick way to redirect visitor to another page.
+
+| Param | Description |
+| --- | --- |
+| $url_path | Redirect to more specific path. |
+
 ```php
-get($name, $type = null, $default = null)
+mixed get(string $name [, string $type = null [, $default = null]])
 ```
+Return $_GET variable with pre-set exception return
+
+| Param | Description |
+| --- | --- |
+| $name | $_GET variable name. |
+| $type | Expected data type. |
+| $default | Default value. |
+| Return value | Specify $_GET variable result. |
+
 ```php
-post($name, $type = null, $default = null)
+mixed post($name, $type = null, $default = null)
 ```
+Return $_POST variable with pre-set exception return
+
+| Param | Description |
+| --- | --- |
+| $name | $_POST variable name. |
+| $type | Expected data type. |
+| $default | Default value. |
+| Return value | Specify $_POST variable result. |
 
 #### Page Response
 ```php
-show_error($error, $line_no = null)
+void show_error($error [, $line_no = null])
 ```
+Return error message and output to client
+
+| Param | Description |
+| --- | --- |
+| $error | Http error status code |
+| $line | Line no to report error. |
+
 ```php
-show_xml($status, $data = '')
+void show_xml(bool $status [, mixed $data = ''])
 ```
+Return data as xml content to client
+
+| Param | Description |
+| --- | --- |
+| $status | Result in successful status or error status. |
+| $data | String or Array data to output. |
+
 ```php
-show_json($status, $data = null)
+void show_json(bool $status, [, mixed $data = null])
 ```
+Return data as json object to client
+
+| Param | Description |
+| --- | --- |
+| $status | Result in successful status or error status. |
+| $data | String or Array data to output. |
 
 #### Multiple Language
 ```php
-lang($language_code)
+string lang(string $language_code)
 ```
+Return localized text from loaded text object.
+
+| Param | Description |
+| --- | --- |
+| $language_code | Language represent code. |
+| Return value | string with correct language. |
+
 ```php
-get_lang_var($json)
+string get_lang_var($json)
 ```
+Un-serialize language object and return suitable language content
+
+| Param | Description |
+| --- | --- |
+| $json | Stringify json string. |
+| Return value | A single string with correct language. |
+
+
+
+
+
+
