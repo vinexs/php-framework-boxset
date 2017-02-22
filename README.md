@@ -107,10 +107,13 @@ object load_controller(string $controller_name)
 Load controller file and return as object.
 
 $controller_name
-    Controller name inside controllers folder with out .class.php extension.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Controller name inside controllers folder with out .class.php extension.
     
 Return value
-    Return controller object or boolean false.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Return controller object or boolean false.
+
 
 ```php
 object load_model(string $model_name, string $db_name)
