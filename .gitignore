@@ -10,18 +10,14 @@
 !main/controllers/*
 !main/languages/*
 !main/models/*
-!main/settings/setting.php
-!main/views/frame_layout.php
-!main/views/element_samples.php
+!main/settings/*
+!main/views/*
 
 # Plugin
 !plugins/BaseModel.class.php
-!plugins/Image.class.php
 !plugins/Mcrypt.class.php
-!plugins/PaypalClassic.class.php
-!plugins/PaypalRest.class.php
 
 # Root
 !.htaccess
 !index.php
-README.md
+!README.md
