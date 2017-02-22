@@ -1,5 +1,4 @@
 {
-	"minPhpVersion": "5.0",
 	"url": {
 		"domain": "{domain}",
 		"root": "{url_root}"
