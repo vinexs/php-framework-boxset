@@ -106,14 +106,10 @@ object load_controller(string $controller_name)
 ```
 Load controller file and return as object.
 
-$controller_name
-
-&nbsp;&nbsp;&nbsp;&nbsp;Controller name inside controllers folder with out .class.php extension.
-    
-Return value
-
-&nbsp;&nbsp;&nbsp;&nbsp;Return controller object or boolean false.
-
+| Param | Description |
+| --- | --- |
+| $controller_name | Controller name inside controllers folder with out .class.php extension. | 
+| Return value | Return controller object or boolean false. |
 
 ```php
 object load_model(string $model_name, string $db_name)
@@ -139,6 +135,7 @@ Return value
 bool load_view(string $view, [array $vars = array()])
 ```
 Load view file to output.
+
 $view 
     View file name inside views directory with out .php extension.
 $vars
