@@ -68,7 +68,7 @@ ___
 |   ├── BaseModel.class.php
 |   └── Mcrypt.class.php
 ├── .htaccess
-├── [index.php](#indexphp)
+├── index.php
 └── manifest.json
 ```
 
