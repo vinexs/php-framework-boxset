@@ -99,20 +99,52 @@ main
 ___
 ## Functions
 ### index.php
+#### File loading
+```php
 load_controller($controller_name)
+```
+```php
 load_model($model_name, $db_name)
+```
+```php
 load_setting($current_only = true)
+```
+```php
 load_view($view, $vars = array())
+```
+```php
 load_plugin($plugin_name)
+```
+```php
 load_file($file_path)
+```
 
+#### Page Handling
+```php
 redirect($url_path)
+```
+```php
 get($name, $type = null, $default = null)
+```
+```php
 post($name, $type = null, $default = null)
+```
 
+#### Page Response
+```php
 show_error($error, $line_no = null)
+```
+```php
 show_xml($status, $data = '')
+```
+```php
 show_json($status, $data = null)
+```
 
+#### Multiple Language
+```php
 lang($language_code)
+```
+```php
 get_lang_var($json)
+```
