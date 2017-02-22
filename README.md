@@ -9,8 +9,8 @@ It is a light weight web application framework. It is developed based on MVC fra
 | url.root | Url between domain and index.php. | "/" or "/project-name" |
 | session.token | Login cookie name. | APP_TOKEN |
 | session.encrypt | Login cookie encryption key. | abcdefg123456789 |
-| application.activity | To store all activity in object. Index will execute the frist one by default.| See below |
-| database | To store all database connections. | See below |
+| application.activity | To store all activity in object. Index will execute the frist one by default.| [See below](#example-of-activity-object) |
+| database | To store all database connections. | [See below](#example-of-database-object) |
 
 #### Example of activity object
 ```json
