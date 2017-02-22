@@ -6,7 +6,7 @@ It is a light weight web application framework. It is developed based on MVC fra
 - php > 5.0
 
 ## Security Warning
-Please make sure your *URL Rewrite Module* work properly or client can read manifest.json content with just typing the path.
+Please make sure your **URL Rewrite Module** work properly or client can read manifest.json content with just typing the path.
 
 ## How to setup
 ### 1. Modify manifest.json
@@ -102,52 +102,52 @@ main
     ├── frame_layout.php
     └── ...
 ```
-* Folder "controllers" store all the controller. Those files should extend form **index.php** .Can be load by **load_controller($controller_name)**
+* Folder "controllers" store all the controller. Those files should extend form *index.php* .Can be load by *load_controller($controller_name)*
 * Folder "languages" store languages ini files. It can be empty if using database languages.
-* Folder "models" store database model files. Those files should extend from **/plugin/BaseModel.class**
-* File in Folder "settings" will load automatically. Can be retrive with **$this->setting['foo']**.
-* Folder "views" will store view files. Those file can be call by **load_view($view, $vars)** .
+* Folder "models" store database model files. Those files should extend from */plugin/BaseModel.class*
+* File in Folder "settings" will load automatically. Can be retrive with *$this->setting['foo']*.
+* Folder "views" will store view files. Those file can be call by *load_view($view, $vars)* .
 
 ___
 ## Functions
 ### index.php
 #### File loading
 
+**Load controller file and return as object.**
 ```php
 object load_controller(string $controller_name)
 ```
-Load controller file and return as object.
 
 | Param | Description |
 | --- | --- |
 | $controller_name | Controller name inside controllers folder with out .class.php extension. | 
 | Return value | Return controller object or boolean false. |
 
+**Load model file and return as object.**
 ```php
 object load_model(string $model_name, string $db_name)
 ```
-Load model file and return as object.
 
 | Param | Description |
 | --- | --- |
 | $model_name | Load model name inside models directory with out .class.php extension. |
 | $db_name | Which database name the model will connect. |
 | Return value | Model object or boolean false. |
-   
+
+**Load all file in target activity's [settings] folder and store $SETTING variable to class variable for future use.**
 ```php
 array load_setting([$current_only = true])
 ```
-Load all file in target activity's [settings] folder and store $SETTING variable to class variable for future use.
 
 | Param | Description |
 | --- | --- |
 | $current_only | Return only current activity settings. |
 | Return value | Setting variables |
 
+**Load view file to output.**
 ```php
 bool load_view(string $view [,array $vars = array()])
 ```
-Load view file to output.
 
 | Param | Description |
 | --- | --- |
@@ -155,39 +155,39 @@ Load view file to output.
 | $vars | Variable to pass through view. |
 | Return value | Boolean to repersent load view success or fail. |    
 
+**Load plugin class.php file to process.**
 ```php
 bool load_plugin(string $plugin_name)
 ```
-Load plugin class.php file to process.
 
 | Param | Description |
 | --- | --- |
 | $plugin_name | Plugin name in plugin directory without .class.php extension. |
 | Return value | Boolean to repersent load class success or fail. |
 
+**Output file in specific location, do not echo any content before load file.**
 ```php
 void load_file(string $file_path)
 ```
-Output file in specific location, do not echo any content before load file.
 
 | Param | Description |
 | --- | --- |
 | $file_path | Output file absolute path. |
 
 #### Page Handling
+**Quick way to redirect visitor to another page.**
 ```php
 void redirect(string $url_path)
 ```
-Quick way to redirect visitor to another page.
 
 | Param | Description |
 | --- | --- |
 | $url_path | Redirect to more specific path. |
 
+**Return $_GET variable with pre-set exception return**
 ```php
 mixed get(string $name [, string $type = null [, $default = null]])
 ```
-Return $_GET variable with pre-set exception return
 
 | Param | Description |
 | --- | --- |
@@ -196,10 +196,10 @@ Return $_GET variable with pre-set exception return
 | $default | Default value. |
 | Return value | Specify $_GET variable result. |
 
+**Return $_POST variable with pre-set exception return**
 ```php
 mixed post($name, $type = null, $default = null)
 ```
-Return $_POST variable with pre-set exception return
 
 | Param | Description |
 | --- | --- |
@@ -209,30 +209,30 @@ Return $_POST variable with pre-set exception return
 | Return value | Specify $_POST variable result. |
 
 #### Page Response
+**Return error message and output to client**
 ```php
 void show_error($error [, $line_no = null])
 ```
-Return error message and output to client
 
 | Param | Description |
 | --- | --- |
 | $error | Http error status code |
 | $line | Line no to report error. |
 
+**Return data as xml content to client**
 ```php
 void show_xml(bool $status [, mixed $data = ''])
 ```
-Return data as xml content to client
 
 | Param | Description |
 | --- | --- |
 | $status | Result in successful status or error status. |
 | $data | String or Array data to output. |
 
+**Return data as json object to client**
 ```php
 void show_json(bool $status, [, mixed $data = null])
 ```
-Return data as json object to client
 
 | Param | Description |
 | --- | --- |
@@ -240,28 +240,23 @@ Return data as json object to client
 | $data | String or Array data to output. |
 
 #### Multiple Language
+**Return localized text from loaded text object.**
 ```php
 string lang(string $language_code)
 ```
-Return localized text from loaded text object.
 
 | Param | Description |
 | --- | --- |
 | $language_code | Language represent code. |
 | Return value | string with correct language. |
 
+**Un-serialize language object and return suitable language content**
 ```php
 string get_lang_var($json)
 ```
-Un-serialize language object and return suitable language content
 
 | Param | Description |
 | --- | --- |
 | $json | Stringify json string. |
 | Return value | A single string with correct language. |
-
-
-
-
-
 
