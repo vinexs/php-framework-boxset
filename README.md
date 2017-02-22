@@ -100,24 +100,65 @@ ___
 ## Functions
 ### index.php
 #### File loading
+
 ```php
-load_controller($controller_name)
+object load_controller(string $controller_name)
 ```
+Load controller file and return as object.
+
+$controller_name
+    Controller name inside controllers folder with out .class.php extension.
+    
+Return value
+    Return controller object or boolean false.
+
 ```php
-load_model($model_name, $db_name)
+object load_model(string $model_name, string $db_name)
 ```
+Load model file and return as object.
+$model_name
+    Load model name inside models directory with out .class.php extension.
+$db_name
+    Which database name the model will connect.
+Return value
+    Model object or boolean false.
+    
 ```php
-load_setting($current_only = true)
+array load_setting([$current_only = true])
 ```
+Load all file in target activity's [settings] folder and store $SETTING variable to class variable for future use.
+$current_only
+    Return only current activity settings.
+Return value
+    Setting variables
+    
 ```php
-load_view($view, $vars = array())
+bool load_view(string $view, [array $vars = array()])
 ```
+Load view file to output.
+$view 
+    View file name inside views directory with out .php extension.
+$vars
+    Variable to pass through view.
+Return value
+    Boolean to repersent load view success or fail.
+
 ```php
-load_plugin($plugin_name)
+bool load_plugin(string $plugin_name)
 ```
+Load plugin class.php file to process.
+$plugin_name
+    Plugin name in plugin directory without .class.php extension.
+Return value
+    Boolean to repersent load class success or fail.
+
 ```php
-load_file($file_path)
+void load_file(string $file_path)
 ```
+Output file in specific location, do not echo any content before load file.
+$file_path
+    Output file absolute path.
+
 
 #### Page Handling
 ```php
