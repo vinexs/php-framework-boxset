@@ -59,36 +59,41 @@ ___
 ## File structure
 ### Framework
 ```
-| -- assets
-|     \ main
-|     | ...
-| -- main
-|     \ (activity)
-| -- plugins
-|     \ BaseModel.class.php
-|     | Mcrypt.class.php
-| .htaccess
-| index.php
-| manifest.json
+├── assets
+│   ├── main
+│   └── ...
+├── main
+|   └──(activity)
+├── plugins
+|   ├── BaseModel.class.php
+|   └── Mcrypt.class.php
+├── .htaccess
+├── index.php
+└── manifest.json
 ```
 
 ### Activity
 ```
 main
-|-- controllers
-|     \ MainApp.class.php
-|-- languages
-|     \ en.ini
-|     | zs.ini
-|     | zt.ini
-|-- models
-|     \ LanguageModel.class.php
-|     | SessionModel.class.php
-|-- settings
-|     \ setting.php
-|-- views
-      \ element_sample.php
-      | frame_layout.php
+├── controllers
+|   ├── MainApp.class.php
+│   └── ...
+├── languages
+|   ├── en.ini
+|   ├── zs.ini
+|   ├── zt.ini
+│   └── ...
+├── models
+|   ├── LanguageModel.class.php
+|   ├── SessionModel.class.php
+│   └── ...
+├── settings
+|   ├── setting.php
+│   └── ...
+└── views
+    ├── element_sample.php
+    ├── frame_layout.php
+    └── ...
 ```
 * Folder "controllers" store all the controller. Those files should extend form **index.php** .Can be load by **load_controller($controller_name)**
 * Folder "languages" store languages ini files. It can be empty if using database languages.
