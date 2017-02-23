@@ -28,18 +28,10 @@ class MainApp extends Index
         $this->load_view('frame_layout', $vars);
     }
 
-	function handler_phpinfo()
-	{
-		phpinfo();
-		exit;
-	}
-
     function handler_default($url)
     {
         $this->show_error(404, __LINE__);
     }
-
-    // Add handler here ...
 
     /** Allow developer to custom error response. */
     function show_error($error, $line = null)
@@ -47,26 +39,9 @@ class MainApp extends Index
         parent::show_error($error, $line);
     }
 
-    function handler_shop($url)
-    {
-        $launcher = $this->load_module('modules/shop_module_1.0/', 'Shop', array(
-            'table_prefix' => 'cms_',
-            'db_source' => 'test_db',
-        ));
-        return $launcher->handler_shop($url);
-    }
-
+    // Add handler here ...
 
     // ==============  Default Handler  ==============
-
-    function handler_blog($url)
-    {
-        $launcher = $this->load_module('modules/blog_module_1.0/', 'Blog', array(
-            'table_prefix' => 'cms_',
-            'db_source' => 'test_db',
-        ));
-        return $launcher->handler_blog($url);
-    }
 
     /** For manage account session, such as create user, change password, login and logout. */
     function handler_session($url)
