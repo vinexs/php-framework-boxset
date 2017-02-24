@@ -5,7 +5,10 @@ It is a light weight web application framework. It is developed based on MVC fra
 - Web server with URL Rewrite Module
 - php > 5.0
 
-## Security Warning
+## Security
+Read only environment is more secure on web server. This framework support working on read only environment. Try to keep your document root folder read only and set main.storage path. Put all writable content to this main.storage.
+
+## Warning
 Please make sure your **URL Rewrite Module** work properly or client can read manifest.json content with just typing the path.
 
 ## How to setup
