@@ -14,32 +14,53 @@ class MainApp extends Index
     {
     }
 
-    // ==============  Custom Handler  ==============
+    // ==============  Custom Handler (Add Your Handler in This Part)  ==============
 
+    /** When user requesting URL root, this method will be triggered. */
     function handler_index()
     {
+        # Pass to CSS Sample page for demonstration.
         $this->redirect('css_sample');
     }
+    
+    /** When user request a URL without handler support, this method will be triggered. */
+    function handler_default($url)
+    {
+        # Calling MainApp:show_error($error, $line);
+        $this->show_error(404, __LINE__);
+    }
 
+    /** Custom Page: show css. */
     function handler_css_sample()
     {
+        # Put variable in $vars array. Those variable can be use in View file. 
         $vars['TITLE'] = 'CSS Sample | Vinexs Framework';
         $vars['CONTAIN_VIEW'] = 'element_samples';
         $this->load_view('frame_layout', $vars);
     }
 
-    function handler_default($url)
-    {
-        $this->show_error(404, __LINE__);
-    }
-
     /** Allow developer to custom error response. */
     function show_error($error, $line = null)
     {
+        # Just call default show error respons.
         parent::show_error($error, $line);
     }
-
-    // Add handler here ...
+    
+    /** 
+     * Calling a module inside an activity.
+     * Assume there is a module call shop and URL http://www.example.com/shop/ .
+    */
+    function handler_shop($url)
+    {
+        # Args 'modules/shop_module/1.0/' is the path of module.
+        # Args 'Shop' is the launcher's controller name.
+        # The third args array is pre-assigned setting variable, mostly used to pass setting data through module.
+        $launcher = $this->load_module('modules/shop_module/1.0/', 'Shop', array(
+            'table_prefix' => 'cms_',
+            'db_source' => 'test_db',
+        ));        
+        return $launcher->handler_shop($url);
+    }
 
     // ==============  Default Handler  ==============
 
