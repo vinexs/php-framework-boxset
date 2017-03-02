@@ -1,9 +1,9 @@
-# Vinexs Web Framework
-It is a light weight web application framework. It is developed based on MVC framework.
+# BoxSet
+A set for code written based on MVC Structure. It come with a very simple file structure. Really easy to pick up. If you do not want a complex php framework. Just GIT it
 
 ## Requirement
-- Web server with URL Rewrite Module
-- php > 5.0
+- Web server with URL rewrite module ENABLED.
+- php > 5.0 .
 
 ## Security
 Read only environment is more secure on web server. This framework support working on read only environment. Try to keep your document root folder read only and set main.storage path. Put all writable content to this main.storage.
@@ -12,6 +12,10 @@ Read only environment is more secure on web server. This framework support worki
 Please make sure your **URL Rewrite Module** work properly or client can read manifest.json content with just typing the path.
 
 ## How to setup
+```git
+git clone https://github.com/vinexs/php-framework-boxset [project-name]
+```
+
 ### 1. Modify manifest.json
 | Param | Description | Example |
 | --- | --- | --- |
