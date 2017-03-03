@@ -1,4 +1,4 @@
-# BoxSet
+# Boxset
 A set for code written based on MVC Structure. It come with a very simple file structure. Really easy to pick up. If you do not want a complex php framework. Just GIT it
 
 ## Requirement
