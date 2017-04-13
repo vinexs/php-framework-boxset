@@ -30,14 +30,12 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Version: 2.0.0
- * Last Update: 2015-07-20
+ * Version: 2.0.1
+ * Last Update: 2017-04-13
  *
  * Reference:
  *	MVC - http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
  */
-
-error_reporting(E_ALL);
 
 class index
 {
@@ -685,6 +683,8 @@ class index
     }
 }
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 error_reporting(E_ALL ^ E_STRICT);
 
 define('INIT_TIME_START', microtime(true));
