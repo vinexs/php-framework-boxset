@@ -93,7 +93,7 @@ class index
         ksort($this->manifest);
 
         $this->setting = $this->load_setting();
-        $this->setting['storage'] = $this->manifest['activity'][$activity]['storage'];
+        $this->setting['storage'] = empty($this->manifest['activity'][$activity]['storage']) ? null : $this->manifest['activity'][$activity]['storage'];
 
         if (($launch = $this->load_controller($this->manifest['activity'][$activity]['launch'])) == false) {
             $this->show_error(500);
