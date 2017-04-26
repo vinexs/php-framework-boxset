@@ -30,14 +30,14 @@
                 <hr/>
                 <h3>Plugin and Cascading Style Sheets Framework</h3>
                 <ul style="list-style-type:circle;padding-left:20px;">
-                    <li><a href="http://getbootstrap.com/" target="_blank">Bootstrap 3.3.5</a></li>
-                    <li><a href="http://fontawesome.io/" target="_blank">Font Awesome 4.4.0</a></li>
-                    <li><a href="http://jquery.com/" target="_blank">jQuery v1.11.3</a></li>
+                    <li><a href="http://getbootstrap.com/" target="_blank">Bootstrap 3.3.7</a></li>
+                    <li><a href="http://fontawesome.io/" target="_blank">Font Awesome 4.7.0</a></li>
+                    <li><a href="http://jquery.com/" target="_blank">jQuery v1.12.4</a></li>
                     <li><a href="https://github.com/aFarkas/html5shiv" target="_blank">HTML5 Shiv 3.7.2</a></li>
                     <li><a href="https://github.com/scottjehl/Respond" target="_blank">Respond.js</a> - Provide
                         responsive CSS to IE 8 or lower.
                     </li>
-                    <li><strong>jExtender 1.6</strong> - Provide more power to JavaScript & jQuery.</li>
+                    <li><strong>jExtender 1.8</strong> - Provide more power to JavaScript & jQuery.</li>
                     <li><strong>Bootstrap+ 1.0.0</strong> - Give better develop ways & user experience from bootstrap.
                     </li>
                 </ul>
