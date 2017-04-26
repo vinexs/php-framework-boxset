@@ -17,10 +17,10 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
     <![endif]-->
     <link class="respond" type="text/css" rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link type="text/css" rel="stylesheet" class="respond" href="<?php echo $URL_RSC; ?>css/common.min.css"/>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="<?php echo $URL_REPOS; ?>jextender/1.0.8/jExtender.js"></script>
     <link type="image/x-icon" rel="shortcut icon" href="<?php echo $URL_REPOS; ?>favicon.ico"/>
     <link type="image/x-icon" rel="icon" href="<?php echo $URL_REPOS; ?>favicon.ico"/>
@@ -126,7 +126,7 @@
       href="<?php echo $URL_ROOT;?>/assets/respond/1.4.2/respond.proxy.gif"/>
 <script type="text/javascript" src="<?php echo $URL_ROOT;?>/assets/respond/1.4.2/respond.proxy.min.js"></script>
 <![endif]-->
-<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo $URL_REPOS; ?>bootstrap-plus/1.0.0/bootstrap+.min.js"></script>
 <script type="text/javascript" src="<?php echo $URL_RSC; ?>js/common.js"></script>
 <!-- Completed: <?php echo number_format(microtime(true) - INIT_TIME_START, 5); ?>s -->
