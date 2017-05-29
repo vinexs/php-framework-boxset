@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2015 Vin Wong @ vinexs.com
+ * Copyright 2017 Vin Wong @ vinexs.com
  *
  * All rights reserved.
  *
@@ -45,7 +45,7 @@ class SessionModel extends BaseModel
                 'is_delete' => 0,
                 'login_id' => $login_id,
                 'verified' => 1,
-                array('BINARY `password` = ?', $password),
+                array('BINARY `password` = PASSWORD(?)', $password),
             ),
             'limit' => 1,
         );
@@ -91,11 +91,11 @@ class SessionModel extends BaseModel
             'table' => $this->setting['table_prefix'] . 'user',
             'row' => array(
                 'login_id' => $login_id,
-                'password' => $password,
                 'name' => $name,
                 'email' => $email,
                 'birth' => $birth,
                 'gender' => $gender,
+                array('`password` = PASSWORD(?)', $password),
             ),
         );
         $id = $this->insert($insert_data);
@@ -113,7 +113,7 @@ class SessionModel extends BaseModel
         }
         $update_data = array(
             'set' => array(
-                'password' => $new_password
+                array('`password` = PASSWORD(?)', $password),
             ),
             'table' => $this->setting['table_prefix'] . 'user',
             'where' => array(
