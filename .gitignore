@@ -1,23 +1,4 @@
-#Ignore everything
-*
+# Only startup.php will be ignore in this framework.
+# Please set your own .gitignore in your open source project.
 
-# Assets
-!assets/main/
-!assets/favicon.ico
-!assets/robots.txt
-
-# Main
-!main/controllers/*
-!main/languages/*
-!main/models/*
-!main/settings/*
-!main/views/*
-
-# Plugin
-!plugins/BaseModel.class.php
-!plugins/Mcrypt.class.php
-
-# Root
-!.htaccess
-!index.php
-!README.md
+startup.php
