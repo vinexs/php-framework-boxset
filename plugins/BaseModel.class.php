@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Copyright 2015 Vin Wong @ vinexs.com
- * 
+ * Copyright 2017 Vin Wong @ vinexs.com
+ *
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * 1. Redistributions of source code must retain the above copyright
@@ -18,7 +18,7 @@
  * 4. Neither the name of the <organization> nor the
  *    names of its contributors may be used to endorse or promote products
  *    derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY <COPYRIGHT HOLDER> ''AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
  * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -30,8 +30,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Version: 1.0.0
- * Last Update: 2015-03-18
+ * Version: 1.0.18
+ * Last Update: 2017-05-29
  *
  */
 
@@ -45,7 +45,7 @@ class BaseModel
     );
     public $errorInfo = array();
 
-    function select($opt)
+    public function select($opt)
     {
         if (!isset($opt['table'])) {
             return false;
@@ -73,7 +73,33 @@ class BaseModel
         return $this->query($sql, $param);
     }
 
-    function condition_parser($condition)
+    public function count($opt, $primary_key = 'id')
+    {
+        if (!isset($opt['table'])) {
+            return false;
+        }
+        $param = array();
+        $sql = "SELECT COUNT(`". $primary_key ."`) AS `cnt` FROM " . $opt['table'];
+        if (!empty($opt['where'])) {
+            $where = $this->condition_parser($opt['where']);
+            $param = array_merge($param, $where['param']);
+            $sql .= " WHERE (" . implode(') AND (', $where['cond']) . ")";
+        }
+        if (!empty($opt['group_by'])) {
+            $sql .= " GROUP BY " . $opt['group_by'];
+        }
+        if (!empty($opt['having'])) {
+            $sql .= " HAVING " . $opt['having'];
+        }
+        if (!empty($opt['limit'])) {
+            $sql .= " LIMIT " . $opt['limit'];
+        }
+        $result = $this->query($sql, $param);
+
+        return empty($result[0]['cnt']) ? 0 : (int) $result[0]['cnt'];
+    }
+
+    public function condition_parser($condition)
     {
         $cond = array();
         $param = array();
@@ -106,7 +132,7 @@ class BaseModel
         );
     }
 
-    function query($sql, $param)
+    public function query($sql, $param)
     {
         $this->sql = $sql;
         $query = $this->db->prepare($sql);
@@ -117,7 +143,7 @@ class BaseModel
         return $query->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    function insert($opt)
+    public function insert($opt)
     {
         if (!isset($opt['table']) or empty($opt['row'])) {
             return false;
@@ -128,9 +154,20 @@ class BaseModel
         $value = array();
         $param = array();
         foreach ($opt['row'] as $field => $data) {
-            $fields[] = $field;
-            $value[] = '?';
-            $param[] = $data;
+            if (is_int($field)) {
+                if (!is_array($data) and isset($data[1])
+                    and preg_match('/([\w\W]+)\s*?\=\s*?([\w\W]+)/', $data[0], $matches)) {
+                    $fields[] = trim($matches[1]);
+                    $value[] = trim($matches[2]);
+                    $param[] = $data[1];
+                } else {
+                    continue; // Igrone invalid format
+                }
+            } else {
+                $fields[] = $field;
+                $value[] = '?';
+                $param[] = $data;
+            }
         }
         $sql .= " (" . implode(',', $fields) . ") VALUES (" . implode(',', $value) . ")";
 
@@ -142,7 +179,7 @@ class BaseModel
         return $this->db->lastInsertId();
     }
 
-    function update($opt)
+    public function update($opt)
     {
         if (!isset($opt['table']) or empty($opt['set']) or empty($opt['where'])) {
             return false;
@@ -160,7 +197,7 @@ class BaseModel
         return $this->execute($sql, $param);
     }
 
-    function execute($sql, $param)
+    public function execute($sql, $param)
     {
         $this->sql = $sql;
         $query = $this->db->prepare($sql);
@@ -171,7 +208,7 @@ class BaseModel
         return $query->rowCount();
     }
 
-    function delete($opt)
+    public function delete($opt)
     {
         if (!isset($opt['table']) or empty($opt['where'])) {
             return false;
@@ -183,20 +220,19 @@ class BaseModel
 
         return $this->execute($sql, $where['param']);
     }
-	
-	function become_key_value_pair($rows, $key, $value = null)
-	{
-		$result = array();
-		if ($value == null) {
-			foreach ($rows as $row) {
-				$result[$row[$key]] = $row;
-			}
-			return $result;
-		}
-		foreach ($rows as $row) {
-			$result[$row[$key]] = $row[$value];
-		}
-		return $result;
-	}
 
+    public function become_key_value_pair($rows, $key, $value = null)
+    {
+        $result = array();
+        if ($value == null) {
+            foreach ($rows as $row) {
+                $result[$row[$key]] = $row;
+            }
+            return $result;
+        }
+        foreach ($rows as $row) {
+            $result[$row[$key]] = $row[$value];
+        }
+        return $result;
+    }
 }
