@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--{ Copyright 2015 Vin Wong @ vinexs.com }-->
+<!--{ Copyright 2017 Vin Wong @ vinexs.com }-->
 <!--[if IE 8]>
 <html class="lt-ie9"><![endif]-->
 <!--[if (IE 9|gt IE 9|!(IE))]><!-->

@@ -1,11 +1,5 @@
-/*
- * Copyright 2015 Vin Wong @ vinexs.com
- *
- * All rights reserved.
- */
-
 (function(jQuery){
-		
+
 	jQuery.extend({
 		url: (function(){
 			var data = {};
@@ -19,6 +13,6 @@
 			}
 			return data;
 		})()
-	});	
-	
+	});
+
 })(jQuery);
