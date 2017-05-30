@@ -1,4 +1,1 @@
-# Only startup.php will be ignore in this framework.
-# Please set your own .gitignore in your open source project.
-
-startup.php
+# Please set your own .gitignore in your open source project before upload.
