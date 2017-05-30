@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright 2015 Vin Wong @ vinexs.com	(MIT License)
+ * Copyright 2017 Vin Wong @ vinexs.com	(MIT License)
  *
  * All rights reserved.
  *
@@ -30,8 +30,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * Version: 2.0.1
- * Last Update: 2017-04-13
+ * Version: 2.2.0
+ * Last Update: 2017-05-30
  *
  * Reference:
  *	MVC - http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
@@ -51,7 +51,7 @@ class index
      */
     public function initialize()
     {
-        $this->manifest = $this->parse_manifest();
+        $this->manifest = $this->parse_startup();
 
         ## repackage url to array variable
         $url = str_replace($this->manifest['url_root'], '', $_SERVER['REQUEST_URI']);
@@ -112,37 +112,42 @@ class index
     /** Check manifest content and parse it into validated array.
      *  @return array Parsed manifest variables.
      */
-    public function parse_manifest()
+    public function parse_startup()
     {
-        $manifest = array();
-        $m = json_decode(file_get_contents('manifest.json'), true);
-        if ($m == null) {
-            die('Unable to read manifest or manifest format invalid.');
+        if (!file_exists(ROOT_FOLDER .'startup.php')) {
+            die('Startup: startup.php is missing');
         }
-        if (empty($m['application']['activity'])) {
+        include_once(ROOT_FOLDER. 'startup.php');
+        if (empty($START_UP)) {
+            die('Startup: startup.php do not contain var $START_UP');
+        }
+        if (empty($START_UP['url'])) {
+            die('Startup: startup.php do not contain var $START_UP[url]');
+        }
+        if (empty($START_UP['application']['activity'])) {
             die('Manifest: Application do not contain activity launcher.');
         }
-        if (!empty($m['url'])) {
-            foreach ($m['url'] as $name => $value) {
+        if (!empty($START_UP['url'])) {
+            foreach ($START_UP['url'] as $name => $value) {
                 $manifest['url_'.$name] = $value;
             }
         }
-        if (!empty($m['session'])) {
-            foreach ($m['session'] as $name => $value) {
+        if (!empty($START_UP['session'])) {
+            foreach ($START_UP['session'] as $name => $value) {
                 $manifest['session_'.$name] = $value;
             }
         }
-        $manifest['activity_default'] = current(array_keys($m['application']['activity']));
-        if (empty($m['application']['activity'][$manifest['activity_default']])) {
+        $manifest['activity_default'] = current(array_keys($START_UP['application']['activity']));
+        if (empty($START_UP['application']['activity'][$manifest['activity_default']])) {
             die('Manifest: Activity '.$manifest['activity_default'].' do not contain any setting.');
         }
-        foreach ($m['application']['activity'] as $name => $activity) {
+        foreach ($START_UP['application']['activity'] as $name => $activity) {
             if (empty($activity['launch'])) {
                 die('Manifest: Activity '.$name.' missing launch name.');
             }
-            $m['application']['activity'][$name]['language_default'] = current($activity['language']);
+            $START_UP['application']['activity'][$name]['language_default'] = current($activity['language']);
             if (empty($activity['languageSource'])) {
-                $m['application']['activity'][$name]['languageSource'] = 'ini';
+                $START_UP['application']['activity'][$name]['languageSource'] = 'ini';
             }
             if (!empty($activity['inherit'])) {
                 foreach ($activity['inherit'] as $i => $inherit) {
@@ -150,13 +155,13 @@ class index
                         continue;
                     }
                     $manifest['inherit_launch'][$inherit[0]] = $inherit[1];
-                    $m['application']['activity'][$name]['inherit'][$i] = $inherit[0];
+                    $START_UP['application']['activity'][$name]['inherit'][$i] = $inherit[0];
                 }
             }
         }
-        $manifest['activity'] = $m['application']['activity'];
-        if (!empty($m['database'])) {
-            foreach ($m['database'] as $name => $db) {
+        $manifest['activity'] = $START_UP['application']['activity'];
+        if (!empty($START_UP['database'])) {
+            foreach ($START_UP['database'] as $name => $db) {
                 if (!empty($db['host'])) {
                     try {
                         $dsn = 'mysql:host='.$db['host'].';dbname='.$db['db_name'].'';
