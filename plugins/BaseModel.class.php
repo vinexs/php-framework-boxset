@@ -31,7 +31,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  * Version: 1.0.18
- * Last Update: 2017-05-29
+ * Last Update: 2017-05-30
  *
  */
 
@@ -155,7 +155,7 @@ class BaseModel
         $param = array();
         foreach ($opt['row'] as $field => $data) {
             if (is_int($field)) {
-                if (!is_array($data) and isset($data[1])
+                if (is_array($data) and isset($data[1])
                     and preg_match('/([\w\W]+)\s*?\=\s*?([\w\W]+)/', $data[0], $matches)) {
                     $fields[] = trim($matches[1]);
                     $value[] = trim($matches[2]);
@@ -170,7 +170,7 @@ class BaseModel
             }
         }
         $sql .= " (" . implode(',', $fields) . ") VALUES (" . implode(',', $value) . ")";
-
+        
         $query = $this->db->prepare($sql);
         if (!$query->execute($param)) {
             $this->errorInfo = $query->errorInfo();
