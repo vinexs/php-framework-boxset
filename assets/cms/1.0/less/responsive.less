@@ -1,0 +1,93 @@
+/*		Mobile Layout : <= 420px  Android Mobile , iPhone Size
+-------------------------------------------------------------- */
+@media (max-width: 420px) {
+	#main-container{
+		#cate-ctrl{
+			.cate-child{
+				float:none;
+				width: 100%;
+				&.sub{
+					padding-top: 5px;
+					padding-bottom: 5px;
+				}
+			}
+		}
+	}
+
+
+}
+/*		Wide Mobile Layout : <= 767px
+-------------------------------------------------------------- */
+@media (max-width: 767px) {
+	/* For google map API, more clear view. */
+	.gm-style{
+		.gm-style-cc{
+			display:none;
+			&:first-child{
+				display:block;
+			}
+		}
+	}
+
+	
+	
+	
+	
+	
+}
+/*		Tablet Layout : >= 768px
+------------------------------------------------------------------ */
+@media (min-width: 768px){
+	.login{
+		.login-header{
+			margin: 160px auto 20px auto;
+			width: 350px;
+		}
+		.login-strip-container{
+			.login-content{
+				width: 350px;
+				margin: 0 auto;
+			}
+		}
+	}
+	#search_bar{
+		width: 300px;
+		left: auto;
+		right: 113px;
+		border-left: 1px solid #D8D8D8;
+		border-right: 1px solid #D8D8D8;
+		border-radius: 0 0 5px 5px;
+	}
+}
+/*		Small Screen Computer Layout : >= 992px
+------------------------------------------------------------------ */
+@media (min-width: 992px) {
+	body{
+		#cms-navbar{
+			margin-left: 220px;
+		}
+		#side-navbar{
+			left: 0px;
+		}
+		#main-container{
+			margin-left: 220px;
+		}
+	}
+	#cms-navbar{
+		button[data-action=menu_toogle]{
+			display: none;
+		}
+	}
+	
+	
+	
+	
+
+	/* .container { max-width: 750px; }  /* Cancel Response Min-width 1200px */
+}
+/*		Standed Screen Computer Layout : >= 1200px
+------------------------------------------------------------------ */
+@media (min-width: 1200px) {
+	
+	/* .container { max-width: 970px; }  /* Cancel Response Min-width 1200px */
+}
