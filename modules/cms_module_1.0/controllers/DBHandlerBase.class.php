@@ -31,6 +31,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+/** Provide ui constant for limit input type. */
 class UI
 {
     const TEXT = 1;
@@ -46,6 +47,7 @@ class UI
     const MULTILANG = 11;
 }
 
+/** Provide field type constant for limit data type. */
 class FieldType
 {
     // Primary key
@@ -65,18 +67,28 @@ class FieldType
 
 class DBHandlerBase extends CmsAppBase
 {
+    /** Variable used to trace back the parent path. */
     public $plugin_location = '';
 
+    /** This variable must be override. Please example for more information.
+     *  $this->table['name'] should not include table prefix.
+    */
     public $table = array(
-        'name' => '', // Without Table prefix
+        'name' => '',
         'field' => array(),
     );
 
+    /** Used to assign parent path */
     function __construct()
     {
         $this->plugin_location = dirname(dirname(__FILE__)) . '/';
     }
 
+    /** Divide user to different CRUD events.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     *  @return object|json|string Method response.
+     */
     function run_handler($url)
     {
         if (!isset($url[1])) {
@@ -86,6 +98,7 @@ class DBHandlerBase extends CmsAppBase
             return $this->load_list($url);
         }
         if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            // GET function used to output UI
             switch ($url[1]) {
                 case 'list':
                     return $this->load_list($url);
@@ -95,6 +108,7 @@ class DBHandlerBase extends CmsAppBase
                     return $this->edit_record($url);
             }
         } else {
+            // POST function used to add, edit & delete record.
             switch ($url[1]) {
                 case 'get_list':
                     return $this->get_list_record($url);
@@ -113,8 +127,9 @@ class DBHandlerBase extends CmsAppBase
         }
     }
 
-    // Response UI
-
+    /** Search primary key from $this->table variable.
+     *  @return string Primary key or null.
+     */
     function get_primary_key()
     {
         foreach ($this->table['field'] as $field_name => $field_setting) {
@@ -125,6 +140,24 @@ class DBHandlerBase extends CmsAppBase
         return null;
     }
 
+    /** Find table information from $this->setting['menu']. Used as title and subtitle of the page.
+     * @param string $part Table name without prefix.
+     *
+     * @return array title and subtitle to descript table
+     */
+    function get_cate_info($part)
+    {
+        return array(
+            'text' => $this->setting['menu'][$part]['text'],
+            'desc' => $this->setting['menu'][$part]['desc'],
+        );
+    }
+
+    /** Display table as list. Only field setting contain 'list_field' will be show.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     * @return string HTML content listing table rows.
+     */
     function load_list($url)
     {
         $part = $url[0];
@@ -142,16 +175,11 @@ class DBHandlerBase extends CmsAppBase
         return $this->load_view('cms_frame_layout', $vars);
     }
 
-    function get_cate_info($part)
-    {
-        return array(
-            'text' => $this->setting['menu'][$part]['text'],
-            'desc' => $this->setting['menu'][$part]['desc'],
-        );
-    }
-
-    // Ajax get
-
+    /** Display form to add a row.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     * @return string HTML content form of table's fields.
+     */
     function add_record($url)
     {
         $part = $url[0];
@@ -166,8 +194,11 @@ class DBHandlerBase extends CmsAppBase
         return $this->load_view('cms_frame_layout', $vars);
     }
 
-    // Ajax process
-
+    /** Display form to edit a row.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     * @return string HTML content form of table's fields.
+     */
     function edit_record($url)
     {
         if (!isset($url[2])) {
@@ -200,8 +231,11 @@ class DBHandlerBase extends CmsAppBase
         return $this->load_view('cms_frame_layout', $vars);
     }
 
-    // Ajax process
-
+    /** Output list record as json for ajax response.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     * @return json Table row and pagination information.
+     */
     function get_list_record($url)
     {
         $part = $url[0];
@@ -251,8 +285,11 @@ class DBHandlerBase extends CmsAppBase
         return $this->show_json(true, array('list' => $list, 'pager' => $p->get_html(), 'total' => $total));
     }
 
-    // Ajax process
-
+    /** Output relative field content as json for ajax response.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     * @return json Requested field content.
+     */
     function get_field_option($url)
     {
         $fieldname = $this->post('fieldname', 'string', null);
@@ -278,6 +315,10 @@ class DBHandlerBase extends CmsAppBase
         ));
     }
 
+    /** Output default field option as json for ajax response.
+     * @param array $url Handler to response server file, which load by php redirection.
+     * @return json Requested field option.
+     */
     function get_field_default_value($url)
     {
         $fieldname = $this->post('fieldname', 'string', null);
@@ -296,6 +337,11 @@ class DBHandlerBase extends CmsAppBase
         ));
     }
 
+    /** Handle save (add/edit) record request from user.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     * @return json Response saved success status or failure and error message
+     */
     function process_save_record($url)
     {
         $part = $url[0];
@@ -377,11 +423,15 @@ class DBHandlerBase extends CmsAppBase
             if (!empty($upload_field) and ($upload = $this->process_upload_file_to_rsc($part, $insert_key_val, $upload_field, $data)) == false) {
                 return $this->show_json(false, array('error' => 'unable_upload_file', 'code' => __LINE__));
             }
-            if (($after = $this->process_record_change($data)) == false) {
+            if (($after = $this->after_record_added($data)) == false) {
                 return $this->show_json(false, array('error' => 'unable_exec_after_change', 'code' => __LINE__));
             }
             return $this->show_json(true, array('primary_key' => $insert_key_val));
         } else if ($mode == 'edit' and $primary_key != null) {
+            $record = $this->load_record($this->table['name'], $primary_key, $_POST['primary_key_val']);
+            if (empty($record)) {
+                return $this->show_json(false, array('error' => 'record_alerady_not_existed', 'code' => __LINE__));
+            }
             $data['last_modified_by'] = $this->user['id'];
             $data['last_modified_at'] = date('Y-m-d H:i:s');
             if (($updated = $data_model->edit_record($this->table['name'], $primary_key, $data[$primary_key], $data)) == false) {
@@ -390,7 +440,7 @@ class DBHandlerBase extends CmsAppBase
             if (!empty($upload_field) and ($upload = $this->process_upload_file_to_rsc($part, $data[$primary_key], $upload_field, $data)) == false) {
                 return $this->show_json(false, array('error' => 'unable_upload_file', 'code' => __LINE__));
             }
-            if (($after = $this->process_record_change($data)) == false) {
+            if (($after = $this->after_record_changed($record, $data)) == false) {
                 return $this->show_json(false, array('error' => 'unable_exec_after_change', 'code' => __LINE__));
             }
             return $this->show_json(true);
@@ -399,16 +449,48 @@ class DBHandlerBase extends CmsAppBase
         }
     }
 
-    // Internal function
+    /** Handle remove record request from user.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     * @return json Response saved success status or failure and error message
+     */
+    function process_remove_record($url)
+    {
+        $primary_key = $this->get_primary_key();
+        if (empty($_POST['primary_key_val'])) {
+            return $this->show_json(false, array('error' => 'invalid_primary_val', 'code' => __LINE__));
+        }
+        $data_model = $this->load_model('DataModel', $this->setting['db_source']);
+        $record = $this->load_record($this->table['name'], $primary_key, $_POST['primary_key_val']);
+        if (empty($record)) {
+            return $this->show_json(false, array('error' => 'record_alerady_not_existed', 'code' => __LINE__));
+        }
+        $result = $data_model->remove_record($this->table['name'], $this->user['id'], $primary_key, $_POST['primary_key_val']);
+        if (!$result) {
+            return $this->show_json(false, array('error' => 'unable_delete_record', 'code' => __LINE__));
+        }
+        if (($after = $this->after_record_removed($record)) == false) {
+            return $this->show_json(false, array('error' => 'unable_exec_after_change', 'code' => __LINE__));
+        }
+        return $this->show_json(true);
+    }
 
-    function process_upload_file_to_rsc($part, $primary_key_val, $upload_field, $record)
+    /** Move temporary uploaded file to permanent storage
+     * @param string $part         CMS part name (Table name without prefix)
+     * @param string $record_key   Primary key value as folder name
+     * @param string $upload_field Uploaded file field
+     * @param array  $record       File related record
+     *
+     * @return bool Successful upload or failure
+     */
+    function process_upload_file_to_rsc($part, $record_key, $upload_field, $record)
     {
         foreach ($record as $fieldname => $value) {
             if (!in_array($fieldname, $upload_field)) {
                 continue;
             }
             $temp_storage = $this->manifest['activity'][$this->activity_current]['folder_storage'] . $part . '_' . $fieldname . '/temp/';
-            $storage = $this->manifest['activity'][$this->activity_current]['folder_storage'] . $part . '_' . $fieldname . '/' . $primary_key_val . '/';
+            $storage = $this->manifest['activity'][$this->activity_current]['folder_storage'] . $part . '_' . $fieldname . '/' . $record_key . '/';
             if (!file_exists($storage)) {
                 mkdir($storage, 0755, true);
             }
@@ -419,25 +501,11 @@ class DBHandlerBase extends CmsAppBase
         return true;
     }
 
-    function process_record_change($record)
-    {
-        return true;
-    }
-
-    function process_remove_record($url)
-    {
-        $primary_key = $this->get_primary_key();
-        if (empty($_POST['primary_key_val'])) {
-            return $this->show_json(false, array('error' => 'invalid_primary_val', 'code' => __LINE__));
-        }
-        $data_model = $this->load_model('DataModel', $this->setting['db_source']);
-        $result = $data_model->remove_record($this->table['name'], $this->user['id'], $primary_key, $_POST['primary_key_val']);
-        if (!$result) {
-            return $this->show_json(false, array('error' => 'unable_delete_record', 'code' => __LINE__));
-        }
-        return $this->show_json(true);
-    }
-
+    /** Handle file upload from hidden iframe.
+     * @param array $url Handler to response server file, which load by php redirection.
+     *
+     * @return string HTML inline script command.
+     */
     function process_upload_file($url)
     {
         $part = $url[0];
@@ -475,6 +543,37 @@ class DBHandlerBase extends CmsAppBase
         }
         echo '<html><body><script>window.parent.CMS.uploadDialog.response( ' . json_encode($json) . ' );</script></body></html>';
         exit;
+    }
+
+    /** Handle event after record added, design for developer to override with custom method.
+     * @param array $record Record just added to database.
+     *
+     * @return bool Return true if after event normal, false to alert user.
+     */
+    function after_record_added($record)
+    {
+        return true;
+    }
+
+    /** Handle event after record edited, design for developer to override with custom method.
+     * @param array $old_record Record before edit.
+     * @param array $new_record Record just updated to database.
+     *
+     * @return bool Return true if after event normal, false to alert user.
+     */
+    function after_record_changed($old_record, $new_record)
+    {
+        return true;
+    }
+
+    /** Handle event after record removed, design for developer to override with custom method.
+     * @param array $old_record Already remove record.
+     *
+     * @return bool Return true if after event normal, false to alert user.
+     */
+    function after_record_removed($old_record)
+    {
+        return true;
     }
 
 }

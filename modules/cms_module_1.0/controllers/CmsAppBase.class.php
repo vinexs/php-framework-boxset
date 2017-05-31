@@ -69,6 +69,7 @@ class CmsAppBase extends Index
         return true;
     }
 
+    /** Output navigation menu as an Ajax component. */
     function handler_nav($url)
     {
         if (!$this->check_login()) {
@@ -91,7 +92,7 @@ class CmsAppBase extends Index
 
     // ==============  Default Handler  ==============
 
-    /** Show dynamic page*/
+    /** Show dynamic CRUD page */
     function handler_default($url)
     {
         if (!$this->check_login()) {
