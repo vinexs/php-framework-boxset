@@ -45,7 +45,7 @@ CMS module provide CRUD management tool use website admin. It is a replaceable m
 ## TODO
 Here are some features wanted to add in future.
 - [x] Add module CMS.
-- [ ] Use transaction in in CRUD action.
+- [ ] Use transaction in CRUD action.
 - [ ] Modify CMS module to support multiple admin role.
 - [ ] Add blog module.
 - [ ] Add shopping module.
