@@ -51,3 +51,5 @@ Here are some features wanted to add in future.
 - [ ] Modify CMS module to support multiple admin role.
 - [ ] Add blog module.
 - [ ] Add shopping module.
+- [ ] Add gulp tasking.
+- [ ] Add bower & restructure resource file.
