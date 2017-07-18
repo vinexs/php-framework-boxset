@@ -22,23 +22,23 @@ Read only environment is more secure on web server. This framework support worki
 
 ## Getting start with boxset
 1. Fill in the {value} in _startup.php_  or build it from [here](https://www.vinexs.com/boxset/getting_start).
-1. Add your code to _main/.._
+1. Add your code to _main/_
 
 ## Getting start with CMS module
 CMS module provide CRUD management tool use website admin. It is a replaceable module, do not change any code inside the module package, use extends instead. In this package, _cms/_ folder is an activity extended from cms module. You may add DB controller in _cms/controllers/_ folder to fit your own needed.
 
 #### Setup CMS module
 1. Setup _startup.php_ .
-2. Import _db.sql_ to database.
-3. Set `$SETTING['db_source']` in _cms/settings/setting.php_ to a database name which contain in _startup.php_.
-4. Go to your website, for example www.example.com/cms .
-5. Login account "admin" width password "admin".
-6. Remember to change your admin password.
+1. Import _db.sql_ to database.
+1. Set `$SETTING['db_source']` in _cms/settings/setting.php_ to a database name which contain in _startup.php_.
+1. Go to your website, for example www.example.com/cms .
+1. Login account "admin" width password "admin".
+1. Remember to change your admin password.
 
 #### Add DB controller
 1. Create class extended from DBHandlerBase.class.php
-2. Set public variable $table to match your table format.
-3. Add an item to `$SETTING['menu']` in _cms/settings/setting.php_. This item repersent the navigation menu items.
+1. Set public variable $table to match your table format.
+1. Add an item to `$SETTING['menu']` in _cms/settings/setting.php_. This item repersent the navigation menu items.
 
 #### Tips
 - Set `$SETTING['page_size']` in _cms/settings/setting.php_ can modify the number of row showing in one page.
