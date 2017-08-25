@@ -11,9 +11,12 @@ var config = {
 };
 
 // Gulp Tasks
+var path = require('path');
+
 var gulp = require('gulp'),
     gutil = require('gulp-util'),
     watch = require('glob-watcher'),
+    rename = require('gulp-rename'),
     sass = require('gulp-sass'),
     less = require('gulp-less'),
     sourcemaps = require('gulp-sourcemaps'),
@@ -22,6 +25,8 @@ var gulp = require('gulp'),
 
 var fileCompile = function(source, output) {
     var ext = source.split('.').pop();
+    var outputName = output.split(path.sep).pop();
+    var outputFolder = output.split(path.sep).slice(0, -1).join(path.sep);
     gutil.log(gutil.colors.magenta(source) +' changed, compile with '+ gutil.colors.cyan(ext) +' scheme.');
     switch (ext) {
         case 'less':
@@ -29,8 +34,9 @@ var fileCompile = function(source, output) {
                 .pipe(sourcemaps.init())
                 .pipe(less())
                 .pipe(uglifycss({uglyComments: true}))
+                .pipe(rename(outputName))
                 .pipe(sourcemaps.write('.'))
-                .pipe(gulp.dest(output));
+                .pipe(gulp.dest(outputFolder));
             break;
         case 'scss':
         case 'sass':
@@ -38,13 +44,15 @@ var fileCompile = function(source, output) {
                 .pipe(sourcemaps.init())
                 .pipe(sass({outputStyle: 'compressed'}))
                 .pipe(uglifycss({uglyComments: true}))
+                .pipe(rename(outputName))
                 .pipe(sourcemaps.write('.'))
-                .pipe(gulp.dest(output));
+                .pipe(gulp.dest(outputFolder));
             break;
         case 'js':
             gulp.src(source)
                 .pipe(uglify())
-                .pipe(gulp.dest(output));
+                .pipe(rename(outputName))
+                .pipe(gulp.dest(outputFolder));
             break;
     }
 };
