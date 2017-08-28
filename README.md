@@ -49,7 +49,7 @@ CMS module provide CRUD management tool use website admin. It is a replaceable m
 ## TODO
 Here are some features wanted to add in future.
 - [x] Add module CMS.
-- [ ] Add gulp to compile assets.
+- [x] Add gulp to compile assets.
 - [ ] Add CRUD data-type TIME_PICK.
 - [ ] Add CRUD data-type COLOR_PICK.
 - [ ] Use transaction in CRUD action.
