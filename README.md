@@ -3,16 +3,18 @@
 # Boxset
 A set for code written based on MVC Structure. It come with a very simple file structure. Suitable for simple website. Really easy to pick up. If you do not want a complex php framework. Just _CLONE_ it!
 
-## Functions
+## Features
 - Redirect URL to different **handler function** in Main Controller.
 - Support multiple activity.
 - Support modularized project.
 - Multiple language source, database and ini is supported.
+- Gulp toolkit to watch & compile assets.
 - Open source CMS.
 
 ## Requirement
 - Web server with URL rewrite module **ENABLED**.
 - php > 5.0.
+- Nodejs. _(if you use gulp to compile assets)_.
 
 ## Documentation
 https://www.vinexs.com/boxset/documentation
@@ -47,11 +49,10 @@ CMS module provide CRUD management tool use website admin. It is a replaceable m
 ## TODO
 Here are some features wanted to add in future.
 - [x] Add module CMS.
+- [ ] Add gulp to compile assets.
 - [ ] Add CRUD data-type TIME_PICK.
 - [ ] Add CRUD data-type COLOR_PICK.
 - [ ] Use transaction in CRUD action.
 - [ ] Modify CMS module to support multiple admin role.
 - [ ] Add blog module.
 - [ ] Add shopping module.
-- [ ] Add gulp tasking.
-- [ ] Add bower & restructure resource file.

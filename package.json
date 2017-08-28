@@ -1,0 +1,21 @@
+{
+  "name": "Boxset",
+  "version": "1.0.0",
+  "description": "Lightweight web application framework for PHP.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Vin Wong",
+  "license": "MIT License",
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-util": "3.0.8",
+    "glob-watcher": "4.0.0",
+    "gulp-sass": "3.1.0",
+    "gulp-less": "3.3.2",
+    "gulp-sourcemaps": "2.6.1",
+    "gulp-rename": "1.2.2",
+    "gulp-uglify": "3.0.0",
+    "gulp-uglifycss": "1.0.8"
+  }
+}
