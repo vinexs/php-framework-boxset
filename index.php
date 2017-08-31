@@ -53,13 +53,13 @@ class index
     {
         $this->manifest = $this->parse_startup();
 
-        ## repackage url to array variable
+        //# repackage url to array variable
         $url = str_replace($this->manifest['url_root'], '', $_SERVER['REQUEST_URI']);
         $url_exp = explode('?', preg_replace('~/+~', '/', $url));
         $url = array_shift($url_exp);
         $this->url = explode('/', trim($url, '/'));
 
-        ## determine activity to run
+        //# determine activity to run
         $this->manifest['url_activity'] = $this->manifest['url_root'].'/';
         if (!in_array(current($this->url), array_keys($this->manifest['activity']))) {
             $activity = $this->manifest['activity_default'];
@@ -82,7 +82,7 @@ class index
         }
         array_unshift($this->inheritance, ROOT_FOLDER.$activity.'/');
 
-        ## determine activity language
+        //# determine activity language
         if (!empty($this->manifest['activity'][$activity]['language']) and in_array(current($this->url), $this->manifest['activity'][$activity]['language'])) {
             $this->manifest['lang_current'] = array_shift($this->url);
             $this->manifest['url_activity'] .= $this->manifest['lang_current'].'/';
@@ -110,14 +110,14 @@ class index
     }
 
     /** Check manifest content and parse it into validated array.
-     *  @return array Parsed manifest variables.
+     *  @return array parsed manifest variables
      */
     public function parse_startup()
     {
-        if (!file_exists(ROOT_FOLDER .'startup.php')) {
+        if (!file_exists(ROOT_FOLDER.'startup.php')) {
             die('Startup: startup.php is missing');
         }
-        include_once(ROOT_FOLDER. 'startup.php');
+        include_once ROOT_FOLDER.'startup.php';
         if (empty($START_UP)) {
             die('Startup: startup.php do not contain var $START_UP');
         }
@@ -187,7 +187,7 @@ class index
     }
 
     /** Load all file in target activity's [settings] folder and store $SETTING variable to class variable for future use.
-     * @param bool $current_only Return only current activity settings.
+     * @param bool $current_only return only current activity settings
      *
      * @return array Setting variables
      */
@@ -220,7 +220,7 @@ class index
     /** Load controller file and return as object.
      * @param string $controller_name Controller name inside controllers folder with out .class.php extension.
      *
-     * @return object|bool Controller object or boolean false.
+     * @return object|bool controller object or boolean false
      */
     public function load_controller($controller_name)
     {
@@ -242,7 +242,7 @@ class index
         include_once $class_path;
         $this->{$prop} = new $controller_name();
 
-        # inherit property to class
+        // inherit property to class
         foreach (get_object_vars($this) as $obj => $val) {
             if (isset($this->{$prop}->{$obj}) and is_array($this->{$obj}) and is_array($this->{$prop}->{$obj})) {
                 $this->{$prop}->{$obj} = array_merge_recursive($this->{$prop}->{$obj}, $this->{$obj});
@@ -256,7 +256,7 @@ class index
 
     /** Return error message and output to client
      * @param int $error Http error status code
-     * @param int $line  Line no to report error.
+     * @param int $line  line no to report error
      */
     public function show_error($error, $line = null)
     {
@@ -299,7 +299,7 @@ class index
     }
 
     /** Output file in specific location, do not echo any content before load file.
-     * @param string $file_path Output file absolute path.
+     * @param string $file_path output file absolute path
      */
     public function load_file($file_path)
     {
@@ -315,7 +315,7 @@ class index
         if (!file_exists($file_path)) {
             $this->show_error(404);
         }
-        ## to support caching
+        //# to support caching
         $file_last_modified_at = filemtime($file_path);
 
         if (isset($_SERVER['HTTP_CACHE_CONTROL'])) {
@@ -334,7 +334,7 @@ class index
         $file_mime = finfo_file($finfo, $file_path, FILEINFO_MIME_TYPE);
         finfo_close($finfo);
 
-        ## to support download continuously
+        //# to support download continuously
         if (isset($_SERVER['HTTP_RANGE'])) {
             if (!preg_match("/^bytes=(\d+)?-(\d+)?/i", $_SERVER['HTTP_RANGE'], $matches)) {
                 $this->show_error(416);
@@ -355,7 +355,7 @@ class index
             echo file_get_contents($file_path, false, null, $offset_start, $length);
             exit();
         }
-        ## output new file with header
+        //# output new file with header
         header('Content-Description: File Transfer');
         header('Last-Modified: '.gmdate('D, d M Y H:i:s', $file_last_modified_at).' GMT');
         header('Content-Disposition: filename='.$filename);
@@ -368,7 +368,7 @@ class index
     }
 
     /** For loading file from file storage.
-     * @param string $url Handler to response server file, which load by php redirection.
+     * @param string $url handler to response server file, which load by php redirection
      */
     public function handler_file($url)
     {
@@ -379,12 +379,34 @@ class index
         $this->load_file($file_path);
     }
 
-    /** Load module project
-     * @param string $module_path     Module path to be load in /plugins folders.
-     * @param string $controller_name Module activity launcher name.
-     * @param array  $assign_setting  Pre-assigned setting variable.
+    /** Load vender library from composer.
+     * @param string $repository  Library repository name in https://packagist.org/. If it is empty, all library from composer will loaded.
      *
-     * @return object Plugin launcher object.
+     * @return bool $status       Is library successfully loaded
+     */
+    public function load_composer_lib($repository = '')
+    {
+        $autoload_path = ROOT_FOLDER.'/vendor/autoload.php';
+        if (!file_exists($autoload_path)) {
+            return false;
+        }
+        if (!empty($repository)) {
+            $autoload_path = ROOT_FOLDER.'/vendor/'.$repository.'/autoload.php';
+            if (!file_exists($autoload_path)) {
+                return false;
+            }
+        }
+        include_once $autoload_path;
+
+        return true;
+    }
+
+    /** Load module project
+     * @param string $module_path     module path to be load in /plugins folders
+     * @param string $controller_name module activity launcher name
+     * @param array  $assign_setting  pre-assigned setting variable
+     *
+     * @return object plugin launcher object
      */
     public function load_module($module_path, $controller_name, $assign_setting = array())
     {
@@ -410,9 +432,9 @@ class index
 
     /** Load view file to output.
      * @param string $view View file name inside views directory with out .php extension.
-     * @param array  $vars Variable to pass through view.
+     * @param array  $vars variable to pass through view
      *
-     * @return bool Load view success or fail.
+     * @return bool load view success or fail
      */
     public function load_view($view, $vars = array())
     {
@@ -432,20 +454,20 @@ class index
             $this->vars = array_merge($this->vars, $vars);
         }
         extract($this->vars);
-        include $view_path;
+        include$view_path;
 
         return true;
     }
 
     /** Load language file or database contain as a array variable.
-     * @param bool $current_only Is only load current module language.
+     * @param bool $current_only is only load current module language
      *
-     * @return bool Language load success or fail.
+     * @return bool language load success or fail
      */
     public function load_language($current_only = false)
     {
         if ($this->manifest['activity'][$this->manifest['activity_current']]['languageSource'] == 'ini') {
-            ## read language variable from ini file
+            //# read language variable from ini file
             $target_folders = ($current_only) ? array(current($this->inheritance)) : array_reverse($this->inheritance);
             foreach ($target_folders as $folder) {
                 $lang_path = $folder.'languages/'.$this->manifest['lang_current'].'.ini';
@@ -461,7 +483,7 @@ class index
             if (empty($this->manifest['database'][$db_name])) {
                 return false;
             }
-            ## read language variable from database
+            //# read language variable from database
             if (($lang_model = $this->load_model('LanguageModel', $db_name)) == false) {
                 return false;
             }
@@ -473,9 +495,9 @@ class index
 
     /** Load model file and return as object.
      * @param string $model_name Load model name inside models directory with out .class.php extension.
-     * @param string $db_name    Which database name the model will connect.
+     * @param string $db_name    which database name the model will connect
      *
-     * @return object|bool Model object or boolean false.
+     * @return object|bool model object or boolean false
      */
     public function load_model($model_name, $db_name)
     {
@@ -524,9 +546,10 @@ class index
 
     /**
      * Load plugin class.php file to process.
+     *
      * @param string $plugin_name Plugin name in plugin directory without .class.php extension.
      *
-     * @return bool load class success or fail.
+     * @return bool load class success or fail
      */
     public function load_plugin($plugin_name)
     {
@@ -547,9 +570,9 @@ class index
     }
 
     /** Return localized text from loaded text object.
-     * @param string $code Language represent code.
+     * @param string $code language represent code
      *
-     * @return string with correct language.
+     * @return string with correct language
      */
     public function lang($code)
     {
@@ -557,7 +580,7 @@ class index
     }
 
     /** Quick way to redirect visitor to another page.
-     * @param string $extra Redirect to more specific path.
+     * @param string $extra redirect to more specific path
      */
     public function redirect($extra = '')
     {
@@ -566,8 +589,8 @@ class index
     }
 
     /** Return data as xml content to client
-     * @param bool   $status Result in successful status or error status.
-     * @param string $data   String or Array data to output.
+     * @param bool   $status result in successful status or error status
+     * @param string $data   string or Array data to output
      */
     public function show_xml($status, $data = '')
     {
@@ -583,8 +606,8 @@ class index
     }
 
     /** Return data as json object to client
-     * @param $status $status Result in successful status or error status.
-     * @param object $data String or Array data to output.
+     * @param $status $status result in successful status or error status
+     * @param object $data string or Array data to output
      */
     public function show_json($status, $data = null)
     {
@@ -598,9 +621,9 @@ class index
     }
 
     /** Un-serialize language object and return suitable language content
-     * @param string $json Stringify json string.
+     * @param string $json stringify json string
      *
-     * @return string A single string with correct language.
+     * @return string a single string with correct language
      */
     public function get_lang_var($json)
     {
@@ -622,11 +645,11 @@ class index
     }
 
     /** Return $_POST variable with pre-set exception return
-     * @param string $name    $_POST variable name.
-     * @param string $type    Expected data type.
-     * @param string $default Default value.
+     * @param string $name    $_POST variable name
+     * @param string $type    expected data type
+     * @param string $default default value
      *
-     * @return int|mixed Specify $_POST variable result.
+     * @return int|mixed specify $_POST variable result
      */
     public function post($name, $type = null, $default = null)
     {
@@ -634,11 +657,11 @@ class index
     }
 
     /** Return $_GET variable with pre-set exception return
-     * @param string $name    $_GET variable name.
-     * @param string $type    Expected data type.
-     * @param string $default Default value.
+     * @param string $name    $_GET variable name
+     * @param string $type    expected data type
+     * @param string $default default value
      *
-     * @return int|mixed Specify $_GET variable result.
+     * @return int|mixed specify $_GET variable result
      */
     public function get($name, $type = null, $default = null)
     {
@@ -647,11 +670,11 @@ class index
 
     /** Return array content with pre-set exception return
      * @param array  $var     $_GET or $_POST variable
-     * @param string $name    Variable name.
-     * @param string $type    Expected data type.
-     * @param string $default Default value.
+     * @param string $name    variable name
+     * @param string $type    expected data type
+     * @param string $default default value
      *
-     * @return int|mixed Specify variable result.
+     * @return int|mixed specify variable result
      */
     public function request_var($var, $name, $type, $default)
     {
