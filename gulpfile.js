@@ -21,7 +21,8 @@ var gulp = require('gulp'),
     less = require('gulp-less'),
     sourcemaps = require('gulp-sourcemaps'),
     uglify = require('gulp-uglify'),
-    uglifycss = require('gulp-uglifycss');
+    uglifycss = require('gulp-uglifycss')
+    gzip = require('gulp-gzip');
 
 var fileCompile = function(source, output) {
     var ext = source.split('.').pop();
@@ -68,6 +69,20 @@ gulp.task('watch', function() {
         var output = config[path];
         fileCompile(path, output);
     });
+});
+
+gulp.task('build-gzip', function() {
+    for (var source in config) {
+        gutil.log('Building gzip file of '+ gutil.colors.magenta(config[source]));
+        var output = config[source];
+        var outputName = output.split(path.sep).pop();
+        var outputFolder = output.split(path.sep).slice(0, -1).join(path.sep);
+        gulp.src(output)
+            .pipe(gzip())
+            .pipe(rename(outputName+ '.gz'))
+            .pipe(gulp.dest(outputFolder));
+        gutil.log('Output as '+ gutil.colors.magenta(outputFolder + path.sep + outputName+ '.gz'));
+    }
 });
 
 gulp.task('default', ['watch']);
